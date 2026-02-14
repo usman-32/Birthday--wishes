@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Noor Fatima!</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(45deg, #800080, #ff0000);
+            --bg-color: #fff0f5;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating Hearts */
+        .heart-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 1; pointer-events: none; }
+        .floating-heart { position: absolute; bottom: -100px; color: rgba(255, 0, 0, 0.3); font-size: 20px; animation: floatUp 6s infinite ease-in; }
+        @keyframes floatUp { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; } }
+
+        .container {
+            width: 90%;
+            max-width: 450px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(128, 0, 128, 0.2);
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .step { display: none; animation: fadeIn 0.8s ease; }
+        .step.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+        h1, h2 { background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .btn {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: 0.3s;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        #timer { font-size: 2rem; font-weight: bold; color: #800080; margin: 20px 0; }
+        .main-heart { font-size: 60px; color: #ff0000; cursor: pointer; animation: beat 1s infinite; display: inline-block; }
+        @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+        
+        .photo-frame { border: 8px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin: 10px; width: 140px; display: inline-block; background: white; }
+        input { padding: 12px; border-radius: 20px; border: 2px solid #800080; width: 80%; outline: none; text-align: center; }
+        
+        .whatsapp-btn { background: #25D366; color: white; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="heart-bg" id="heartContainer"></div>
+    <audio id="bdaySong" loop><source src="song.mp3" type="audio/mpeg"></audio>
+
+    <div class="container">
+        <div class="step active" id="step1">
+            <h1>Dear Noor Fatima...</h1>
+            <p>Your surprise unlocks in:</p>
+            <div id="timer">--:--:--</div>
+            <button class="btn" id="startBtn" onclick="startExperience()" disabled>Start Your Surprise</button>
+        </div>
+
+        <div class="step" id="step2">
+            <h2>Who is it?</h2>
+            <input type="text" id="nameInput" placeholder="Enter your name...">
+            <br>
+            <button class="btn" onclick="checkName()">Enter</button>
+        </div>
+
+        <div class="step" id="step3">
+            <h2>For My Best Sister ❤️</h2>
+            <div class="main-heart" onclick="nextStep(4)">❤️</div>
+            <p>Tap the heart!</p>
+        </div>
+
+        <div class="step" id="step4">
+            <h2>Make a Wish! 🕯️</h2>
+            <img src="https://cdn-icons-png.flaticon.com/512/3132/3132121.png" style="width: 150px; cursor: pointer;" onclick="nextStep(5)">
+            <p>Tap to cut the cake!</p>
+        </div>
+
+        <div class="step" id="step5">
+            <h2>Special Moments</h2>
+            <div class="photo-frame"><img src="photo1.jpg" style="width:100%" alt="Memory 1"></div>
+            <div class="photo-frame" style="transform: rotate(3deg);"><img src="photo2.jpg" style="width:100%" alt="Memory 2"></div>
+            <br>
+            <button class="btn" onclick="showFinalSurprise()">Open Your Letter</button>
+        </div>
+
+        <div class="step" id="step6">
+            <h2>Happy Birthday Noor Fatima!</h2>
+            <div style="text-align: left; background: #fff; padding: 20px; border-radius: 15px; border-left: 5px solid #ff0000; margin-bottom: 15px;">
+                <p><strong>Dearest Sister,</strong><br><br>
+                You are the most amazing person I know. On your special day, I want you to know how much I love you. Stay happy always!<br><br>
+                — Your Brother</p>
+            </div>
+            
+            <a href="https://wa.me/YOUR_PHONE_NUMBER?text=Thank%20you%20so%20much%20for%20the%20beautiful%20birthday%20surprise!%20I%20love%20it!%20❤️" class="btn whatsapp-btn" target="_blank">Send me a ❤️ on WhatsApp</a>
+            <br>
+            <button class="btn" onclick="location.reload()" style="background: #888;">Replay</button>
+        </div>
+    </div>
+
+    <script>
+        // SET BIRTHDAY DATE
+        const bday = new Date("February 15, 2026 00:00:00").getTime();
+
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = bday - now;
+            if (diff > 0) {
+                const h = Math.floor(diff / 3600000);
+                const m = Math.floor((diff % 3600000) / 60000);
+                const s = Math.floor((diff % 60000) / 1000);
+                document.getElementById("timer").innerHTML = h + "h " + m + "m " + s + "s";
+            } else {
+                document.getElementById("timer").innerHTML = "Ready! 🎉";
+                document.getElementById("startBtn").disabled = false;
+            }
+        }, 1000);
+
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("floating-heart");
+            heart.innerHTML = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+            document.getElementById("heartContainer").appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 6000);
+        }
+        setInterval(createHeart, 400);
+
+        function startExperience() { document.getElementById('bdaySong').play(); nextStep(2); }
+        function checkName() {
+            if (document.getElementById('nameInput').value.toLowerCase().includes("noor")) nextStep(3);
+            else alert("Enter your name, Noor Fatima!");
+        }
+        function showFinalSurprise() {
+            nextStep(6);
+            confetti({ particleCount: 200, spread: 70, origin: { y: 0.6 }, colors: ['#800080', '#ff0000'] });
+        }
+        function nextStep(n) {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step' + n).classList.add('active');
+        }
+    </script>
+</body>
+</html>
