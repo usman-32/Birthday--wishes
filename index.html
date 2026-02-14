@@ -1,40 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Noor Fatima!</title>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <style>
-        :root {
-            --primary-gradient: linear-gradient(45deg, #800080, #ff0000);
-            --bg-color: #fff0f5;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Noor Fatima</title>
 
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-            position: relative;
-        }
+<style>
+body{
+margin:0;
+font-family: 'Segoe UI', sans-serif;
+background: linear-gradient(135deg,#6a0dad,#ff0066);
+height:100vh;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+color:white;
+}
 
-        /* Floating Hearts */
-        .heart-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 1; pointer-events: none; }
-        .floating-heart { position: absolute; bottom: -100px; color: rgba(255, 0, 0, 0.3); font-size: 20px; animation: floatUp 6s infinite ease-in; }
-        @keyframes floatUp { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; } }
+/* Falling Roses */
+.rose{
+position:fixed;
+top:-50px;
+font-size:30px;
+animation: fall linear infinite;
+}
+@keyframes fall{
+0%{transform:translateY(-50px) rotate(0deg);}
+100%{transform:translateY(110vh) rotate(360deg);}
+}
 
-        .container {
-            width: 90%;
-            max-width: 450px;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(128, 0, 128, 0.2);
+/* Main Box */
+.container{
+background: rgba(255,255,255,0.15);
+backdrop-filter: blur(10px);
+padding:20px;
+border-radius:20px;
+text-align:center;
+width:90%;
+max-width:400px;
+box-shadow:0 0 20px pink;
+}
+
+.step{display:none;}
+.active{display:block;}
+
+button{
+padding:12px 25px;
+border:none;
+border-radius:25px;
+background:linear-gradient(45deg,#ff00cc,#ff0000);
+color:white;
+font-size:16px;
+cursor:pointer;
+margin-top:15px;
+}
+
+/* Cake */
+.cake{
+font-size:100px;
+cursor:pointer;
+animation: bounce 1s infinite;
+}
+@keyframes bounce{
+0%,100%{transform:scale(1);}
+50%{transform:scale(1.1);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- Music -->
+<audio id="song" src="song.mp3"></audio>
+
+<div class="container">
+
+<!-- STEP 1 -->
+<div id="step1" class="step active">
+<h2>Dear Noor Fatima 💜</h2>
+<p>A Special Surprise for You</p>
+<button onclick="startSurprise()">Start Your Surprise</button>
+</div>
+
+<!-- STEP 2 -->
+<div id="step2" class="step">
+<h2>Who is it?</h2>
+<input id="nameInput" placeholder="Enter your name"
+style="padding:10px;border-radius:20px;border:none;text-align:center;">
+<br>
+<button onclick="checkName()">Enter</button>
+</div>
+
+<!-- STEP 3 -->
+<div id="step3" class="step">
+<h2>For My Sweet Sister 🌹</h2>
+<p>Tap the heart</p>
+<div style="font-size:80px;cursor:pointer;" onclick="nextStep(4)">❤️</div>
+</div>
+
+<!-- STEP 4 CAKE -->
+<div id="step4" class="step">
+<h2>Cut the Cake 🎂</h2>
+<div class="cake" onclick="nextStep(5)">🎂</div>
+<p>Tap the cake!</p>
+</div>
+
+<!-- STEP 5 LETTER -->
+<div id="step5" class="step">
+<h2>💌 Love Letter</h2>
+<p style="background:white;color:black;padding:15px;border-radius:15px;">
+Dear Noor Fatima,<br><br>
+You are not just my sister, you are my best friend 💖  
+May Allah give you long life, happiness, and success.  
+Always stay smiling and shining like a star ⭐  
+<br><br>
+With Love,  
+<br><b>Your Brother</b>
+</p>
+<button onclick="showFinal()">Final Surprise 🎉</button>
+</div>
+
+<!-- STEP 6 FINAL -->
+<div id="step6" class="step">
+<h2>🎉 HAPPY BIRTHDAY NOOR FATIMA 🎉</h2>
+<p>You are the best sister in the world 💜</p>
+<button onclick="location.reload()">Replay</button>
+</div>
+
+</div>
+
+<script>
+// Steps
+function nextStep(n){
+document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
+document.getElementById("step"+n).classList.add("active");
+}
+
+// Start
+function startSurprise(){
+document.getElementById("song").play();
+nextStep(2);
+createRoses();
+}
+
+// Name Check
+function checkName(){
+let n=document.getElementById("nameInput").value.toLowerCase();
+if(n.includes("noor")) nextStep(3);
+else alert("Type Noor Fatima 😁");
+}
+
+// Final Surprise
+function showFinal(){
+nextStep(6);
+confettiBlast();
+}
+
+// Roses Animation
+function createRoses(){
+setInterval(()=>{
+let rose=document.createElement("div");
+rose.className="rose";
+rose.innerHTML="🌹";
+rose.style.left=Math.random()*100+"vw";
+rose.style.animationDuration=(Math.random()*3+4)+"s";
+document.body.appendChild(rose);
+setTimeout(()=>rose.remove(),7000);
+},300);
+}
+
+// Confetti Effect
+function confettiBlast(){
+for(let i=0;i<200;i++){
+let c=document.createElement("div");
+c.style.position="fixed";
+c.style.width="6px";
+c.style.height="6px";
+c.style.background="white";
+c.style.left=Math.random()*100+"vw";
+c.style.top=Math.random()*100+"vh";
+c.style.opacity=Math.random();
+document.body.appendChild(c);
+setTimeout(()=>c.remove(),2000);
+}
+}
+</script>
+
+</body>
+</html>            box-shadow: 0 15px 35px rgba(128, 0, 128, 0.2);
             text-align: center;
             position: relative;
             z-index: 10;
