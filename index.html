@@ -114,28 +114,21 @@ button{
 <!-- Step 1 -->
 <div id="step1" class="step active">
   <h2>Dear Noor Fatima 💜</h2>
-  <p>A Birthday Surprise For you</p>
+  <p>A Birthday Surprise From Your Brother</p>
   
- <!-- Step 1: Play Song Button -->
-<button onclick="document.getElementById('birthdaySong').play();">
-  Play Song 🎵
-</button>
+  <!-- Play Song Button -->
+  <button onclick="playYT()">Play Song 🎶</button>
 
-<!-- Hidden Audio Element -->
-<audio id="birthdaySong">
-  <source src="dil-ibadat.mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
-</audio>
+  <!-- YouTube Hidden Player -->
+  <div id="ytplayer">
+    <iframe id="ytframe" width="0" height="0" 
+      src="" 
+      frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+    </iframe>
+  </div>
 
-<!-- YouTube Player (hidden) -->
-<div id="ytplayer" style="display:none;">
-  <iframe id="ytframe" width="0" height="0"
-    src="https://www.youtube.com/embed/YOUTUBE_VIDEO_ID?autoplay=1"
-    frameborder="0" allow="autoplay; encrypted-media">
-  </iframe>
+  <button onclick="startSurprise()">Start Surprise</button>
 </div>
-
-<button onclick="startSurprise()">Start Surprise 🎉</button>
 
 <!-- Step 2 -->
 <div id="step2" class="step">
@@ -177,7 +170,7 @@ button{
 <!-- Step 6 -->
 <div id="step6" class="step">
   <h2>🎉 HAPPY BIRTHDAY NOOR FATIMA 🎉</h2>
-  <p>you are my sunshine in every season 💜</p>
+  <p>You are the best sister 💜</p>
   <button onclick="triggerConfetti(); nextStep(7)">Answer Questions ❤️</button>
 </div>
 
