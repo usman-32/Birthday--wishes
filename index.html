@@ -116,23 +116,26 @@ button{
   <h2>Dear Noor Fatima 💜</h2>
   <p>A Birthday Surprise For you</p>
   
-  <!-- Play Song Button -->
-<button onclick="document.getElementById('birthdaySong').play()">Play Song 🎶</button>
+ <!-- Step 1: Play Song Button -->
+<button onclick="document.getElementById('birthdaySong').play();">
+  Play Song 🎵
+</button>
 
 <!-- Hidden Audio Element -->
 <audio id="birthdaySong">
   <source src="dil-ibadat.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
-  <div id="ytplayer">
-    <iframe id="ytframe" width="0" height="0" 
-      src="" 
-      frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-    </iframe>
-  </div>
 
-  <button onclick="startSurprise()">Start Surprise</button>
+<!-- YouTube Player (hidden) -->
+<div id="ytplayer" style="display:none;">
+  <iframe id="ytframe" width="0" height="0"
+    src="https://www.youtube.com/embed/YOUTUBE_VIDEO_ID?autoplay=1"
+    frameborder="0" allow="autoplay; encrypted-media">
+  </iframe>
 </div>
+
+<button onclick="startSurprise()">Start Surprise 🎉</button>
 
 <!-- Step 2 -->
 <div id="step2" class="step">
