@@ -9,7 +9,7 @@
 body{
   margin:0;
   font-family: Arial;
-  background: linear-gradient(135deg,#6a0dad,#ff0066);
+  background: #e6ccff; /* light purple */
   height:100vh;
   overflow:hidden;
   display:flex;
@@ -36,12 +36,12 @@ body{
   position: fixed;
   width: 10px;
   height: 10px;
-  background: light pink;
+  background: pink;
   top: 0;
   left: 50%;
   z-index: 9999;
   border-radius:50%;
-  opacity:0.8;
+  opacity:0.9;
 }
 
 /* Container */
@@ -162,7 +162,7 @@ button{
 <div id="step6" class="step">
   <h2>🎉 HAPPY BIRTHDAY NOOR FATIMA 🎉</h2>
   <p>You are the best sister 💜</p>
-  <button onclick="nextStep(7)">Answer Questions ❤️</button>
+  <button onclick="triggerConfetti(); nextStep(7)">Answer Questions ❤️</button>
 </div>
 
 <!-- Step 7: Questions -->
@@ -240,6 +240,23 @@ function playYT(){
 // WhatsApp reaction
 function reactWhatsApp(){
   window.open("https://wa.me/923360666774?text=Happy%20Birthday%20Noor%20Fatima!%20♥️🌹","_blank");
+}
+
+// Confetti explosion at Step 6
+function triggerConfetti(){
+  for(let i=0;i<100;i++){
+    let c = document.createElement("div");
+    c.className="confetti";
+    c.style.background = ['#ff0066','#ffcc00','#33ccff','#ff00cc','#00ff99'][Math.floor(Math.random()*5)];
+    c.style.left = Math.random()*100+"vw";
+    c.style.top = Math.random()*-20+"px";
+    c.style.width = c.style.height = Math.random()*10+5+"px";
+    document.body.appendChild(c);
+    let fall = setInterval(()=>{
+      c.style.top = (parseFloat(c.style.top)+Math.random()*5+2)+"px";
+      if(parseFloat(c.style.top) > window.innerHeight) c.remove();
+    },20);
+  }
 }
 </script>
 
