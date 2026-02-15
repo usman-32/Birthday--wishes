@@ -7,151 +7,239 @@
 
 <style>
 body{
-margin:0;
-font-family: Arial;
-background: linear-gradient(135deg,#6a0dad,#ff0066);
-height:100vh;
-overflow:hidden;
-display:flex;
-justify-content:center;
-align-items:center;
-color:white;
+  margin:0;
+  font-family: Arial;
+  background: linear-gradient(135deg,#6a0dad,#ff0066);
+  height:100vh;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  position: relative;
 }
 
-/* Falling Roses */
-.rose{
-position:fixed;
-top:-50px;
-font-size:30px;
-animation: fall linear infinite;
+/* Falling Roses & Balloons */
+.rose, .balloon{
+  position:fixed;
+  top:-50px;
+  font-size:30px;
+  animation: fall linear infinite;
 }
+.balloon{font-size:40px;}
 @keyframes fall{
-to{transform:translateY(110vh) rotate(360deg);}
+  to{transform:translateY(110vh) rotate(360deg);}
 }
 
+/* Confetti */
+.confetti{
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: pink;
+  top: 0;
+  left: 50%;
+  z-index: 9999;
+  border-radius:50%;
+  opacity:0.8;
+}
+
+/* Container */
 .container{
-background: rgba(255,255,255,0.15);
-backdrop-filter: blur(10px);
-padding:20px;
-border-radius:20px;
-text-align:center;
-width:90%;
-max-width:400px;
-box-shadow:0 0 20px pink;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  padding:20px;
+  border-radius:20px;
+  text-align:center;
+  width:90%;
+  max-width:400px;
+  box-shadow:0 0 20px pink;
 }
 
 .step{display:none;}
 .active{display:block;}
 
 button{
-padding:12px 25px;
-border:none;
-border-radius:25px;
-background:linear-gradient(45deg,#ff00cc,#ff0000);
-color:white;
-font-size:16px;
-cursor:pointer;
-margin-top:15px;
+  padding:12px 25px;
+  border:none;
+  border-radius:25px;
+  background:linear-gradient(45deg,#ff00cc,#ff0000);
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  margin-top:15px;
+  position: relative;
 }
 
 .cake{
-font-size:90px;
-cursor:pointer;
-animation:bounce 1s infinite;
+  font-size:90px;
+  cursor:pointer;
+  animation:bounce 1s infinite;
 }
 @keyframes bounce{
-0%,100%{transform:scale(1);}
-50%{transform:scale(1.1);}
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.1);}
+}
+
+/* YouTube iframe hidden at start */
+#ytplayer{display:none; margin-top:15px;}
+
+/* YES / NO buttons at end */
+#question-buttons button{
+  margin:10px;
+}
+
+/* NO button moves on hover */
+#noBtn:hover{
+  position: absolute;
+  top: calc(50% - 25px + (Math.random()*100-50)px);
+  left: calc(50% - 50px + (Math.random()*100-50)px);
 }
 </style>
 </head>
 
 <body>
 
-<!-- MUSIC -->
-<audio id="song">
-  <source src="Teri_Masumiyat_Full_Video_Song.mp3" type="audio/mpeg">
-</audio>
 <div class="container">
 
+<!-- Step 1 -->
 <div id="step1" class="step active">
-<h2>Dear Noor Fatima 💜</h2>
-<p>A Birthday Surprise From Your Brother </p>
-<button onclick="document.getElementById('song').play()">
-Play Song 🎶
-</button>
+  <h2>Dear Noor Fatima 💜</h2>
+  <p>A Birthday Surprise From Your Brother</p>
+  
+  <!-- Play Song Button -->
+  <button onclick="playYT()">Play Song 🎶</button>
+
+  <!-- YouTube Hidden Player -->
+  <div id="ytplayer">
+    <iframe width="0" height="0" 
+      src="https://www.youtube.com/embed/ex5H4XgMhRI?autoplay=1" 
+      frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+    </iframe>
+  </div>
+
   <button onclick="startSurprise()">Start Surprise</button>
 </div>
 
+<!-- Step 2 -->
 <div id="step2" class="step">
-<h3>Who is it?</h3>
-<input id="nameInput" placeholder="Type your name">
-<br>
-<button onclick="checkName()">Enter</button>
+  <h3>Who is it?</h3>
+  <input id="nameInput" placeholder="Type your name">
+  <br>
+  <button onclick="checkName()">Enter</button>
 </div>
 
+<!-- Step 3 -->
 <div id="step3" class="step">
-<h2>For My Sweet Sister 🌹</h2>
-<p>Tap the heart</p>
-<div style="font-size:70px;cursor:pointer;" onclick="nextStep(4)">❤️</div>
+  <h2>For My Sweet Sister 🌹</h2>
+  <p>Tap the heart</p>
+  <div style="font-size:70px;cursor:pointer;" onclick="nextStep(4)">❤️</div>
 </div>
 
+<!-- Step 4 -->
 <div id="step4" class="step">
-<h2>Cut the Cake 🎂</h2>
-<div class="cake" onclick="nextStep(5)">🎂</div>
-<p>Tap the cake</p>
+  <h2>Cut the Cake 🎂</h2>
+  <div class="cake" onclick="nextStep(5)">🎂</div>
+  <p>Tap the cake</p>
 </div>
 
+<!-- Step 5 -->
 <div id="step5" class="step">
-<h2>💌 wishing Letter</h2>
-<p style="background:white;color:black;padding:15px;border-radius:12px;">
-Dear Noor Fatima,<br><br>
-You are not only my sister but my best friend 💖  
-May Allah bless you with happiness and success.  
-Always smile like a shining star ⭐  
-<br><br>
-Love,  
-<br><b>🌹♥️</b>
-</p>
-<button onclick="nextStep(6)">Final Surprise 🎉</button>
+  <h2>💌 Wishing Letter</h2>
+  <p style="background:white;color:black;padding:15px;border-radius:12px;">
+    Dear Noor Fatima,<br><br>
+    You are not only my sister but my best friend 💖  
+    May Allah bless you with happiness and success.  
+    Always smile like a shining star ⭐  
+    <br><br>
+    Love,  
+    <br><b>🌹♥️</b>
+  </p>
+  <button onclick="nextStep(6)">Final Surprise 🎉</button>
 </div>
 
+<!-- Step 6 -->
 <div id="step6" class="step">
-<h2>🎉 HAPPY BIRTHDAY NOOR FATIMA 🎉</h2>
-<p>You are the best sister 💜</p>
-<button onclick="location.reload()">Replay</button>
+  <h2>🎉 HAPPY BIRTHDAY NOOR FATIMA 🎉</h2>
+  <p>You are the best sister 💜</p>
+  <button onclick="nextStep(7)">Answer Questions ❤️</button>
+</div>
+
+<!-- Step 7: Questions -->
+<div id="step7" class="step">
+  <h2>Do you like it?</h2>
+  <div id="question-buttons">
+    <button onclick="alert('Yay! So glad 😍')">YES</button>
+    <button id="noBtn">NO</button>
+  </div>
+  <h3>How was your birthday?</h3>
+  <div id="question-buttons">
+    <button onclick="alert('Happy to hear! 💖')">Great</button>
+    <button onclick="alert('We will make next one better! 🌹')">Not so good</button>
+  </div>
+
+  <br>
+  <button onclick="reactWhatsApp()">React ♥️🌹</button>
 </div>
 
 </div>
 
 <script>
+// Step navigation
 function nextStep(n){
-document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
-document.getElementById("step"+n).classList.add("active");
+  document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
+  document.getElementById("step"+n).classList.add("active");
 }
 
+// Start surprise
 function startSurprise(){
-document.getElementById("song").play();
-nextStep(2);
-createRoses();
+  nextStep(2);
+  createRoses();
+  createBalloons();
 }
 
+// Check name input
 function checkName(){
-let n=document.getElementById("nameInput").value.toLowerCase();
-if(n.includes("noor")) nextStep(3);
-else alert("Type Noor Fatima 😁");
+  let n = document.getElementById("nameInput").value.toLowerCase();
+  if(n.includes("noor")) nextStep(3);
+  else alert("Type Noor Fatima 😁");
 }
 
+// Create falling roses
 function createRoses(){
-setInterval(()=>{
-let r=document.createElement("div");
-r.className="rose";
-r.innerHTML="🌹";
-r.style.left=Math.random()*100+"vw";
-r.style.animationDuration=(Math.random()*3+4)+"s";
-document.body.appendChild(r);
-setTimeout(()=>r.remove(),7000);
-},300);
+  setInterval(()=>{
+    let r = document.createElement("div");
+    r.className="rose";
+    r.innerHTML="🌹";
+    r.style.left = Math.random()*100+"vw";
+    r.style.animationDuration = (Math.random()*3+4)+"s";
+    document.body.appendChild(r);
+    setTimeout(()=>r.remove(),7000);
+  },300);
+}
+
+// Create falling balloons
+function createBalloons(){
+  setInterval(()=>{
+    let b = document.createElement("div");
+    b.className="balloon";
+    let balloons = ['🎈','🎉','🎊','💖'];
+    b.innerHTML = balloons[Math.floor(Math.random()*balloons.length)];
+    b.style.left = Math.random()*100+"vw";
+    b.style.animationDuration = (Math.random()*3+5)+"s";
+    document.body.appendChild(b);
+    setTimeout(()=>b.remove(),7000);
+  },400);
+}
+
+// Play YouTube song
+function playYT(){
+  document.getElementById("ytplayer").style.display="block";
+}
+
+// WhatsApp reaction
+function reactWhatsApp(){
+  window.open("https://wa.me/923256437933?text=Happy%20Birthday%20Noor%20Fatima!%20♥️🌹","_blank");
 }
 </script>
 
