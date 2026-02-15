@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,7 @@
 <style>
 body{
 margin:0;
-font-family: 'Segoe UI', sans-serif;
+font-family: Arial;
 background: linear-gradient(135deg,#6a0dad,#ff0066);
 height:100vh;
 overflow:hidden;
@@ -26,11 +26,9 @@ font-size:30px;
 animation: fall linear infinite;
 }
 @keyframes fall{
-0%{transform:translateY(-50px) rotate(0deg);}
-100%{transform:translateY(110vh) rotate(360deg);}
+to{transform:translateY(110vh) rotate(360deg);}
 }
 
-/* Main Box */
 .container{
 background: rgba(255,255,255,0.15);
 backdrop-filter: blur(10px);
@@ -56,11 +54,10 @@ cursor:pointer;
 margin-top:15px;
 }
 
-/* Cake */
 .cake{
-font-size:100px;
+font-size:90px;
 cursor:pointer;
-animation: bounce 1s infinite;
+animation:bounce 1s infinite;
 }
 @keyframes bounce{
 0%,100%{transform:scale(1);}
@@ -71,227 +68,88 @@ animation: bounce 1s infinite;
 
 <body>
 
-<!-- Music -->
+<!-- MUSIC -->
 <audio id="song" src="song.mp3"></audio>
 
 <div class="container">
 
-<!-- STEP 1 -->
 <div id="step1" class="step active">
 <h2>Dear Noor Fatima 💜</h2>
-<p>A Special Surprise for You</p>
-<button onclick="startSurprise()">Start Your Surprise</button>
+<p>A Birthday Surprise From Your Brother Usman</p>
+<button onclick="startSurprise()">Start Surprise</button>
 </div>
 
-<!-- STEP 2 -->
 <div id="step2" class="step">
-<h2>Who is it?</h2>
-<input id="nameInput" placeholder="Enter your name"
-style="padding:10px;border-radius:20px;border:none;text-align:center;">
+<h3>Who is it?</h3>
+<input id="nameInput" placeholder="Type your name">
 <br>
 <button onclick="checkName()">Enter</button>
 </div>
 
-<!-- STEP 3 -->
 <div id="step3" class="step">
 <h2>For My Sweet Sister 🌹</h2>
 <p>Tap the heart</p>
-<div style="font-size:80px;cursor:pointer;" onclick="nextStep(4)">❤️</div>
+<div style="font-size:70px;cursor:pointer;" onclick="nextStep(4)">❤️</div>
 </div>
 
-<!-- STEP 4 CAKE -->
 <div id="step4" class="step">
 <h2>Cut the Cake 🎂</h2>
 <div class="cake" onclick="nextStep(5)">🎂</div>
-<p>Tap the cake!</p>
+<p>Tap the cake</p>
 </div>
 
-<!-- STEP 5 LETTER -->
 <div id="step5" class="step">
 <h2>💌 Love Letter</h2>
-<p style="background:white;color:black;padding:15px;border-radius:15px;">
+<p style="background:white;color:black;padding:15px;border-radius:12px;">
 Dear Noor Fatima,<br><br>
-You are not just my sister, you are my best friend 💖  
-May Allah give you long life, happiness, and success.  
-Always stay smiling and shining like a star ⭐  
+You are not only my sister but my best friend 💖  
+May Allah bless you with happiness and success.  
+Always smile like a shining star ⭐  
 <br><br>
-With Love,  
-<br><b>Your Brother</b>
+Love,  
+<br><b>Brother Usman</b>
 </p>
-<button onclick="showFinal()">Final Surprise 🎉</button>
+<button onclick="nextStep(6)">Final Surprise 🎉</button>
 </div>
 
-<!-- STEP 6 FINAL -->
 <div id="step6" class="step">
 <h2>🎉 HAPPY BIRTHDAY NOOR FATIMA 🎉</h2>
-<p>You are the best sister in the world 💜</p>
+<p>You are the best sister 💜</p>
 <button onclick="location.reload()">Replay</button>
 </div>
 
 </div>
 
 <script>
-// Steps
 function nextStep(n){
 document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
 document.getElementById("step"+n).classList.add("active");
 }
 
-// Start
 function startSurprise(){
 document.getElementById("song").play();
 nextStep(2);
 createRoses();
 }
 
-// Name Check
 function checkName(){
 let n=document.getElementById("nameInput").value.toLowerCase();
 if(n.includes("noor")) nextStep(3);
 else alert("Type Noor Fatima 😁");
 }
 
-// Final Surprise
-function showFinal(){
-nextStep(6);
-confettiBlast();
-}
-
-// Roses Animation
 function createRoses(){
 setInterval(()=>{
-let rose=document.createElement("div");
-rose.className="rose";
-rose.innerHTML="🌹";
-rose.style.left=Math.random()*100+"vw";
-rose.style.animationDuration=(Math.random()*3+4)+"s";
-document.body.appendChild(rose);
-setTimeout(()=>rose.remove(),7000);
+let r=document.createElement("div");
+r.className="rose";
+r.innerHTML="🌹";
+r.style.left=Math.random()*100+"vw";
+r.style.animationDuration=(Math.random()*3+4)+"s";
+document.body.appendChild(r);
+setTimeout(()=>r.remove(),7000);
 },300);
 }
-
-// Confetti Effect
-function confettiBlast(){
-for(let i=0;i<200;i++){
-let c=document.createElement("div");
-c.style.position="fixed";
-c.style.width="6px";
-c.style.height="6px";
-c.style.background="white";
-c.style.left=Math.random()*100+"vw";
-c.style.top=Math.random()*100+"vh";
-c.style.opacity=Math.random();
-document.body.appendChild(c);
-setTimeout(()=>c.remove(),2000);
-}
-}
 </script>
 
-</body>
-</html>      
-
-</head>
-<body>
-
-    <div class="heart-bg" id="heartContainer"></div>
-    <audio id="https://youtu.be/5u4xTa3LR2U?si=r6hGH5V6qzJ0PcDO" loop><source src="song.mp3" type="audio/mpeg"></audio>
-
-    <div class="container">
-        <div class="step active" id="step1">
-            <h1>Dear Noor Fatima...</h1>
-<button id="startBtn">Start Your Surprise</button>
-
-<script>
-document.getElementById("startBtn").onclick = function () {
-    alert("Surprise Started ❤️");
-};
-</script>
-        
-        </div>
-
-        <div class="step" id="step2">
-            <h2>Who is it?</h2>
-            <input type="text" id="nameInput" placeholder="Enter your name...">
-            <br>
-            <button class="btn" onclick="checkName()">Enter</button>
-        </div>
-
-        <div class="step" id="step3">
-            <h2>For My Best Sister 🌹❤️</h2>
-            <div class="main-heart" onclick="nextStep(4)">❤️</div>
-            <p>Tap the heart!</p>
-        </div>
-
-        <div class="step" id="step4">
-            <h2>Make a Wish! 🕯️</h2>
-            <img src="https://cdn-icons-png.flaticon.com/512/3132/3132121.png" style="width: 150px; cursor: pointer;" onclick="nextStep(5)">
-            <p>Tap to cut the cake!</p>
-        </div>
-
-        <div class="step" id="step5">
-            <h2>Special Moments</h2>
-            <div class="photo-frame"><img src="https://share.google/CJc8YIo7eNAPX3t3s" style="width:100%" alt="Memory 1"></div>
-            <div class="photo-frame" style="transform: rotate(3deg);"><img src="https://share.google/Xf09tE6EUSUBMkvDh" style="width:100%" alt="Memory 2"></div>
-            <br>
-            <button class="btn" onclick="showFinalSurprise()">Open Your Letter</button>
-        </div>
-
-        <div class="step" id="step6">
-            <h2>Happy Birthday Noor Fatima!</h2>
-            <div style="text-align: left; background: #fff; padding: 20px; border-radius: 15px; border-left: 5px solid #ff0000; margin-bottom: 15px;">
-                <p><strong>Dearest Sister,</strong><br><br>
-                You are the most amazing person I know. On your special day, Cheers to another year of life, love, and laughter, sis. Stay happy always!<br><br>
-                — Your Brother</p>
-            </div>
-            
-            <a href="https://wa.me/YOUR_PHONE_NUMBER?text=Thank%20you%20so%20much%20for%20the%20beautiful%20birthday%20surprise!%20I%20love%20it!%20❤️" class="btn whatsapp-btn" target="_blank">Send me a ❤️ on WhatsApp</a>
-            <br>
-            <button class="btn" onclick="location.reload()" style="background: #888;">Replay</button>
-        </div>
-    </div>
-
-    <script>
-        // SET BIRTHDAY DATE
-        const bday = new Date("February 15, 2026 00:00:00").getTime();
-
-        setInterval(() => {
-            const now = new Date().getTime();
-            const diff = bday - now;
-            if (diff > 0) {
-                const h = Math.floor(diff / 3600000);
-                const m = Math.floor((diff % 3600000) / 60000);
-                const s = Math.floor((diff % 60000) / 1000);
-                document.getElementById("timer").innerHTML = h + "h " + m + "m " + s + "s";
-            } else {
-                document.getElementById("timer").innerHTML = "Ready! 🎉";
-                document.getElementById("startBtn").disabled = false;
-            }
-        }, 1000);
-
-        function createHeart() {
-            const heart = document.createElement("div");
-            heart.classList.add("floating-heart");
-            heart.innerHTML = "❤️";
-            heart.style.left = Math.random() * 100 + "vw";
-            heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
-            document.getElementById("heartContainer").appendChild(heart);
-            setTimeout(() => { heart.remove(); }, 6000);
-        }
-        setInterval(createHeart, 400);
-
-        function startExperience() { document.getElementById('bdaySong').play(); nextStep(2); }
-        function checkName() {
-            if (document.getElementById('nameInput').value.toLowerCase().includes("noor")) nextStep(3);
-            else alert("Enter your name, Noor Fatima!");
-        }
-        function showFinalSurprise() {
-            nextStep(6);
-            confetti({ particleCount: 200, spread: 70, origin: { y: 0.6 }, colors: ['#800080', '#ff0000'] });
-        }
-        function nextStep(n) {
-            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-            document.getElementById('step' + n).classList.add('active');
-        }
-    </script>
 </body>
 </html>
