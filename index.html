@@ -9,7 +9,6 @@
 body{
   margin:0;
   font-family: Arial;
-  background: #e6ccff; /* light purple */
   height:100vh;
   overflow:hidden;
   display:flex;
@@ -17,6 +16,16 @@ body{
   align-items:center;
   color:white;
   position: relative;
+  background: linear-gradient(270deg, #ff9a9e, #fad0c4, #fad0c4, #ffecd2);
+  background-size: 800% 800%;
+  animation: gradientBG 20s ease infinite;
+}
+
+/* Animated gradient background */
+@keyframes gradientBG {
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
 }
 
 /* Falling Roses & Balloons */
@@ -63,7 +72,7 @@ button{
   padding:12px 25px;
   border:none;
   border-radius:25px;
-  background:linear-gradient(45deg,#ff00cc,#ff0000);
+  background:linear-gradient(45deg,#ff00cc,#ff0066);
   color:white;
   font-size:16px;
   cursor:pointer;
@@ -112,8 +121,8 @@ button{
 
   <!-- YouTube Hidden Player -->
   <div id="ytplayer">
-    <iframe width="0" height="0" 
-      src="https://www.youtube.com/embed/ex5H4XgMhRI?autoplay=1" 
+    <iframe id="ytframe" width="0" height="0" 
+      src="" 
       frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
     </iframe>
   </div>
@@ -232,9 +241,11 @@ function createBalloons(){
   },400);
 }
 
-// Play YouTube song
+// Play YouTube song instantly
 function playYT(){
   document.getElementById("ytplayer").style.display="block";
+  let iframe = document.getElementById("ytframe");
+  iframe.src = "https://www.youtube.com/embed/ex5H4XgMhRI?autoplay=1";
 }
 
 // WhatsApp reaction
